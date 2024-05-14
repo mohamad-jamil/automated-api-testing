@@ -21,12 +21,19 @@ def generate_documentation():
 # Root page
 @app.route('/')
 def api_documentation():
+    """
+    Renders the API documentation page, listing all available endpoints
+    along with their descriptions.
+    """
     documentation = generate_documentation()
     return render_template('api_documentation.html', documentation=documentation)
 
 # POST new task
 @app.route('/tasks', methods=['POST'])
 def create_task():
+    """
+    Creates a new task.
+    """
     data = request.json
     if 'title' not in data:
         return jsonify({'error': 'Title is required'}), 400
@@ -42,11 +49,17 @@ def create_task():
 # GET all tasks
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
+    """
+    Retrieves all tasks.
+    """
     return jsonify({'tasks': tasks})
 
 # GET task by ID
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
+    """
+    Retrieves a specific task by its ID.
+    """
     task = next((task for task in tasks if task['id'] == task_id), None)
     if task is None:
         return jsonify({'error': 'Task not found'}), 404
@@ -55,6 +68,9 @@ def get_task(task_id):
 # PUT (update) a task
 @app.route('/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
+    """
+    Updates an existing task.
+    """
     task = next((task for task in tasks if task['id'] == task_id), None)
     if task is None:
         return jsonify({'error': 'Task not found'}), 404
@@ -67,6 +83,9 @@ def update_task(task_id):
 # DELETE a task
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
+    """
+    Deletes a specific task by its ID.
+    """
     global tasks
     tasks = [task for task in tasks if task['id'] != task_id]
     return jsonify({'message': 'Task deleted successfully'})
