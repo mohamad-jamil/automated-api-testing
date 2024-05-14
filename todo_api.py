@@ -4,6 +4,11 @@ app = Flask(__name__)
 
 tasks = []
 
+# Root page
+@app.route('/')
+def index():
+    return 'Welcome to the To-Do List API!'
+
 # POST new task
 @app.route('/tasks', methods=['POST'])
 def create_task():
