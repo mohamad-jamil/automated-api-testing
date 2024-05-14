@@ -1,13 +1,28 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 
 app = Flask(__name__)
 
 tasks = []
 
+def generate_documentation():
+    documentation = []
+    for rule in app.url_map.iter_rules():
+        if rule.endpoint != 'static':
+            endpoint = app.view_functions[rule.endpoint]
+            docstring = endpoint.__doc__ if endpoint.__doc__ else "No documentation available"
+            documentation.append({
+                'url': rule.rule,
+                'methods': ', '.join(rule.methods),
+                'docstring': docstring.strip()
+            })
+
+    return documentation
+
 # Root page
 @app.route('/')
-def index():
-    return 'Welcome to the To-Do List API!'
+def api_documentation():
+    documentation = generate_documentation()
+    return render_template('api_documentation.html', documentation=documentation)
 
 # POST new task
 @app.route('/tasks', methods=['POST'])

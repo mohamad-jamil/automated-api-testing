@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Documentation</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        p {
+            color: #666;
+        }
+
+        .endpoint {
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .methods {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>API Documentation</h1>
+    {% for endpoint in documentation %}
+    <div class="endpoint">
+        <h2>{{ endpoint['url'] }}</h2>
+        <p class="methods">Methods: {{ endpoint['methods'] }}</p>
+        <p>{{ endpoint['docstring'] }}</p>
+    </div>
+    {% endfor %}
+</body>
+</html>
