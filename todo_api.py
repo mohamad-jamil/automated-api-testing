@@ -80,6 +80,18 @@ def update_task(task_id):
     task['completed'] = data.get('completed', task['completed'])
     return jsonify({'message': 'Task updated successfully', 'task': task})
 
+# PUT: mark task as complete
+@app.route('/tasks/<int:task_id>/complete', methods=['PUT'])
+def mark_task_complete(task_id):
+    """
+    Marks a task as complete by its ID.
+    """
+    task = next((task for task in tasks if task['id'] == task_id), None)
+    if task is None:
+        return jsonify({'error': 'Task not found'}), 404
+    task['completed'] = True
+    return jsonify({'message': 'Task updated successfully', 'task': task})
+
 # DELETE: task by ID
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
