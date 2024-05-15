@@ -54,6 +54,14 @@ def get_tasks():
     """
     return jsonify({'tasks': tasks})
 
+# GET: task count
+@app.route('/tasks/count', methods=['GET'])
+def get_num_tasks():
+    """
+    Retrieves the number of tasks.
+    """
+    return jsonify({'message': f'There are currently {len(tasks)} tasks.'})
+
 # GET: task by ID
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
