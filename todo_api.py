@@ -92,6 +92,18 @@ def mark_task_complete(task_id):
     task['completed'] = True
     return jsonify({'message': 'Task updated successfully', 'task': task})
 
+# PUT: mark task as incomplete
+@app.route('/tasks/<int:task_id>/incomplete', methods=['PUT'])
+def mark_task_incomplete(task_id):
+    """
+    Marks a task as incomplete by its ID.
+    """
+    task = next((task for task in tasks if task['id'] == task_id), None)
+    if task is None:
+        return jsonify({'error': 'Task not found'}), 404
+    task['completed'] = False
+    return jsonify({'message': 'Task updated successfully', 'task': task})
+
 # DELETE: task by ID
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
