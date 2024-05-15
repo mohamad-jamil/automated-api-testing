@@ -104,6 +104,16 @@ def mark_task_incomplete(task_id):
     task['completed'] = False
     return jsonify({'message': 'Task updated successfully', 'task': task})
 
+# DELETE: all tasks
+@app.route('/tasks', methods=['DELETE'])
+def delete_tasks():
+    """
+    Deletes all tasks.
+    """
+    global tasks
+    tasks = []
+    return jsonify({'message': 'Tasks deleted successfully'})
+
 # DELETE: task by ID
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
