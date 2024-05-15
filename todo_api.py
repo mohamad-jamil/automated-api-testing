@@ -18,7 +18,7 @@ def generate_documentation():
 
     return documentation
 
-# Root page
+# GET: root page
 @app.route('/')
 def api_documentation():
     """
@@ -28,7 +28,7 @@ def api_documentation():
     documentation = generate_documentation()
     return render_template('api_documentation.html', documentation=documentation)
 
-# POST new task
+# POST: new task
 @app.route('/tasks', methods=['POST'])
 def create_task():
     """
@@ -46,7 +46,7 @@ def create_task():
     tasks.append(task)
     return jsonify({'message': 'Task created successfully', 'task': task}), 201
 
-# GET all tasks
+# GET: all tasks
 @app.route('/tasks', methods=['GET'])
 def get_tasks():
     """
@@ -54,7 +54,7 @@ def get_tasks():
     """
     return jsonify({'tasks': tasks})
 
-# GET task by ID
+# GET: task by ID
 @app.route('/tasks/<int:task_id>', methods=['GET'])
 def get_task(task_id):
     """
@@ -65,7 +65,7 @@ def get_task(task_id):
         return jsonify({'error': 'Task not found'}), 404
     return jsonify({'task': task})
 
-# PUT (update) a task
+# PUT: update task by ID
 @app.route('/tasks/<int:task_id>', methods=['PUT'])
 def update_task(task_id):
     """
@@ -80,7 +80,7 @@ def update_task(task_id):
     task['completed'] = data.get('completed', task['completed'])
     return jsonify({'message': 'Task updated successfully', 'task': task})
 
-# DELETE a task
+# DELETE: task by ID
 @app.route('/tasks/<int:task_id>', methods=['DELETE'])
 def delete_task(task_id):
     """
