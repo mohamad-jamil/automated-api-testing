@@ -52,8 +52,15 @@ def get_tasks():
     """
     Retrieves all tasks.
     """
+    completedParam = request.args.get('completed')
+    if completedParam is not None:
+        if completedParam.lower() in ['true', 'false']:
+            completed = completedParam.lower() == 'true'
+            return jsonify({'tasks': [task for task in tasks if task['completed'] == completed]})
+        else:
+            return jsonify({'error': f'Unexpected parameter value for \'completed\': {completedParam}'})
     return jsonify({'tasks': tasks})
-
+        
 # GET: task count
 @app.route('/tasks/count', methods=['GET'])
 def get_num_tasks():
