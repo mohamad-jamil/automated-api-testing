@@ -58,7 +58,7 @@ def get_tasks():
             completed = completedParam.lower() == 'true'
             return jsonify({'tasks': [task for task in tasks if task['completed'] == completed]})
         else:
-            return jsonify({'error': f'Unexpected parameter value for \'completed\': {completedParam}'})
+            return jsonify({'error': f'Unexpected parameter value for \'completed\': {completedParam}'}), 400
     return jsonify({'tasks': tasks})
         
 # GET: task count
